@@ -3,7 +3,7 @@ import {
   matrixToAddressElementArr,
 } from "./matrix_to_address_element_arr.js";
 
-export const getMatrixAddresses = (modifiedMatrix: number[][]) => {
+export const getMatrixAddresses = (modifiedMatrix: number[][]): number[][] => {
   let result: number[][] = [];
   const addressElements: AddressElement[] = matrixToAddressElementArr(
     modifiedMatrix
@@ -16,5 +16,7 @@ export const getMatrixAddresses = (modifiedMatrix: number[][]) => {
       .map((e) => [e.column, e.row]);
     result = [...result, ...aeOfThisColumn];
   }
+
   console.log(result);
+  return result;
 };

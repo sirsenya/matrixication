@@ -1,5 +1,6 @@
 import { generateMatrix } from "./src/generate_matrix.js";
 import { modifyMatrix } from "./src/modify_matrix.js";
+import { putInDb } from "./src/put_in_db.js";
 import { getMatrixAddresses } from "./src/get_matrix_addresses.js";
 import express from "express";
 
@@ -9,7 +10,12 @@ import express from "express";
 const app = express();
 const port = 4000;
 
-app.get("/", (req, res) => {
+type ResObj = {
+  input: number[][];
+  output: number[][];
+};
+
+app.get("/", async (req, res) => {
   let arrayLength: number;
   let arraysQuantity: number;
   try {
@@ -18,7 +24,11 @@ app.get("/", (req, res) => {
     if (arrayLength < 0 || arraysQuantity < 0) {
       throw new Error("please pass values greater than 0");
     }
-    getMatrixAddresses(
+    const initalMatrix: number[][] = generateMatrix({
+      arrayLength,
+      arraysQuantity,
+    });
+    const matrixAddresses: number[][] = getMatrixAddresses(
       modifyMatrix(
         // [
         //   [1, 3, 2, 4],
@@ -27,15 +37,21 @@ app.get("/", (req, res) => {
         //   [3, 3, 3, 1],
         //   [1, 3, 2, 4],
         // ]
-        generateMatrix({ arrayLength, arraysQuantity })
+        initalMatrix
       )
     );
+    const responseObj: ResObj = {
+      input: initalMatrix,
+      output: matrixAddresses,
+    };
+    const responseJson: string = JSON.stringify(responseObj, null, 1);
+    await putInDb(responseJson);
+    res.send(responseJson);
   } catch (e) {
     throw e;
   }
 
   // const geo = req.query.geo;
-  res.send(`${arrayLength} ${arraysQuantity}`);
 });
 
 app.listen(port, () => {

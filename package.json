@@ -5,8 +5,8 @@
   "main": "main.js",
   "type": "module",
   "scripts": {
-    "start": "tsc && node ./build/main.js",
-    "start:dev": "nodemon --exec node --loader ts-node/esm main.ts"
+    "start": "cross-env NODE_ENV=deploy && tsc && node ./build/main.js",
+    "start:dev": "cross-env NODE_ENV=development && nodemon --exec node --loader ts-node/esm main.ts"
   },
   "repository": {
     "type": "git",

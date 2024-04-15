@@ -8,6 +8,14 @@ enum Direction {
   Column = "column",
 }
 
+type CheckSettings = {
+  stablePosition: number;
+  direction: Direction;
+  stableDirection: Direction;
+  position: number;
+  lineEnd: number;
+};
+
 export const modifyMatrix = (initialMatrix: number[][]): number[][] => {
   let arrayLength = initialMatrix[0].length;
   let arraysQuantity = initialMatrix.length;
@@ -34,19 +42,29 @@ export const modifyMatrix = (initialMatrix: number[][]): number[][] => {
     const { row, column, value } = ae;
     let matches: string[] = [stringifyAddressElement(ae)];
     const findMatches = (direction: Direction) => {
-      const stableDirection: Direction =
-        direction === Direction.Column ? Direction.Row : Direction.Column;
-      const position: number = direction === Direction.Column ? column : row;
-      const stablePosition: number =
-        direction === Direction.Column ? row : column;
-      const lineEnd: number =
-        direction === Direction.Column ? arraysQuantity : arrayLength;
-      for (let i = position; i < lineEnd; i++) {
+      const checkSettings: CheckSettings =
+        direction === Direction.Column
+          ? {
+              direction: Direction.Column,
+              stableDirection: Direction.Row,
+              position: column,
+              stablePosition: row,
+              lineEnd: arraysQuantity,
+            }
+          : {
+              direction: Direction.Row,
+              stableDirection: Direction.Column,
+              position: row,
+              stablePosition: column,
+              lineEnd: arrayLength,
+            };
+
+      for (let i = checkSettings.position; i < checkSettings.lineEnd; i++) {
         const newMatch = addressElements.find(
           (e: AddressElement) =>
             e.value === value &&
-            e[direction] === i + 1 &&
-            e[stableDirection] === stablePosition
+            e[checkSettings.stableDirection] === checkSettings.stablePosition &&
+            e[direction] === i + 1
         );
         if (!newMatch) {
           if (matches.length > 2) {
