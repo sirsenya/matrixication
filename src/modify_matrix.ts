@@ -1,27 +1,20 @@
 import { ARRAYS_QUANTITY, ARRAY_LENGTH } from "../main.js";
+import {
+  AddressElement,
+  matrixToAddressElementArr,
+} from "./matrix_to_address_element_arr.js";
 
 enum Direction {
   Row = "row",
   Column = "column",
 }
 
-type AddressElement = {
-  value: number;
-  column: number;
-  row: number;
-};
-
 export const modifyMatrix = (initialMatrix: number[][]): number[][] => {
   console.log(initialMatrix);
   const modifiedMatrix: number[][] = [...initialMatrix];
 
-  const addressElements: AddressElement[] = [];
-
-  for (let column = 0; column < ARRAYS_QUANTITY; column++) {
-    for (let row = 0; row < ARRAY_LENGTH; row++) {
-      addressElements.push({ value: initialMatrix[column][row], row, column });
-    }
-  }
+  const addressElements: AddressElement[] =
+    matrixToAddressElementArr(initialMatrix);
 
   const stringifyAddressElement = (ad: AddressElement): string =>
     `${ad.value}:${ad.row}:${ad.column}`;
