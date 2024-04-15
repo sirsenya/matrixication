@@ -39,9 +39,11 @@ app.get("/", async (req, res) => {
       arrayLength,
       arraysQuantity,
     });
+
     const matrixAddresses: number[][] = getMatrixAddresses(
       modifyMatrix(initalMatrix)
     );
+
     const responseObj: ResObj = {
       input: initalMatrix,
       output: matrixAddresses,

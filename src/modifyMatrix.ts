@@ -19,13 +19,16 @@ type CheckSettings = {
 export const modifyMatrix = (initialMatrix: number[][]): number[][] => {
   let arrayLength = initialMatrix[0].length;
   let arraysQuantity = initialMatrix.length;
-  const modifiedMatrix: number[][] = [...initialMatrix];
+  const modifiedMatrix: number[][] = [];
+  for (let i = 0; i < arraysQuantity; i++) {
+    modifiedMatrix.push(Array(arrayLength));
+  }
 
   const addressElements: AddressElement[] =
     transformMatrixToRows(initialMatrix);
 
-  const stringifyAddressElement = (ad: AddressElement): string =>
-    `${ad.value}:${ad.row}:${ad.column}`;
+  const stringifyAddressElement = (addressElement: AddressElement): string =>
+    `${addressElement.value}:${addressElement.row}:${addressElement.column}`;
   const deStringifyAddressElement = (ad: string): AddressElement => {
     const arr: number[] = ad.split(":").map((e) => Number(e));
     return {
@@ -37,9 +40,9 @@ export const modifyMatrix = (initialMatrix: number[][]): number[][] => {
 
   const globalMatches = new Set<string>();
 
-  const checkAddressElement = (ae: AddressElement) => {
-    const { row, column, value } = ae;
-    let matches: string[] = [stringifyAddressElement(ae)];
+  const checkAddressElement = (addressElement: AddressElement) => {
+    const { row, column, value } = addressElement;
+    let matches: string[] = [stringifyAddressElement(addressElement)];
     const findMatches = (direction: Direction) => {
       const checkSettings: CheckSettings =
         direction === Direction.Column
@@ -71,7 +74,7 @@ export const modifyMatrix = (initialMatrix: number[][]): number[][] => {
               globalMatches.add(match);
             }
           }
-          matches = [stringifyAddressElement(ae)];
+          matches = [stringifyAddressElement(addressElement)];
           break;
         }
         matches.push(stringifyAddressElement(newMatch));
@@ -88,14 +91,15 @@ export const modifyMatrix = (initialMatrix: number[][]): number[][] => {
     }
   }
 
-  for (let gb of globalMatches) {
-    const adFromGb: AddressElement = deStringifyAddressElement(gb);
+  for (let globalMatch of globalMatches) {
+    const addressElement: AddressElement =
+      deStringifyAddressElement(globalMatch);
     const index: number = addressElements.findIndex(
-      (e) => e.column === adFromGb.column && e.row === adFromGb.row
+      (e) => e.column === addressElement.column && e.row === addressElement.row
     );
     if (index === -1) {
       throw new Error(
-        `unknown ae address is somehow inside of globalMatches. Column: ${adFromGb.column}, row: ${adFromGb.row}`
+        `unknown ae address is somehow inside of globalMatches. Column: ${addressElement.column}, row: ${addressElement.row}`
       );
     }
     addressElements[index].value = 0;
@@ -103,8 +107,9 @@ export const modifyMatrix = (initialMatrix: number[][]): number[][] => {
 
   const reconstructMatrix = () => {
     for (let i = 0; i < addressElements.length; i++) {
-      const ae = addressElements[i];
-      modifiedMatrix[ae.column][ae.row] = ae.value;
+      const addressElement = addressElements[i];
+      modifiedMatrix[addressElement.column][addressElement.row] =
+        addressElement.value;
     }
   };
   reconstructMatrix();

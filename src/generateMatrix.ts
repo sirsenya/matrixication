@@ -6,7 +6,8 @@ export const generateMatrix = (params: {
 }): number[][] => {
   const { arrayLength, arraysQuantity } = params;
   function getRandomInt() {
-    return Math.floor(Math.random() * MAX_NUMBER + 1);
+    const result = Math.floor(Math.random() * MAX_NUMBER) + 1;
+    return result;
   }
 
   const generateArray = (): number[] => {
@@ -14,6 +15,7 @@ export const generateMatrix = (params: {
     for (let i = 0; i < arrayLength; i++) {
       array.push(getRandomInt());
     }
+
     return array;
   };
 
