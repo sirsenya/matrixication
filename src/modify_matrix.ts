@@ -1,4 +1,3 @@
-import { ARRAYS_QUANTITY, ARRAY_LENGTH } from "../main.js";
 import {
   AddressElement,
   matrixToAddressElementArr,
@@ -10,6 +9,8 @@ enum Direction {
 }
 
 export const modifyMatrix = (initialMatrix: number[][]): number[][] => {
+  let arrayLength = initialMatrix[0].length;
+  let arraysQuantity = initialMatrix.length;
   console.log(initialMatrix);
   const modifiedMatrix: number[][] = [...initialMatrix];
 
@@ -39,7 +40,7 @@ export const modifyMatrix = (initialMatrix: number[][]): number[][] => {
       const stablePosition: number =
         direction === Direction.Column ? row : column;
       const lineEnd: number =
-        direction === Direction.Column ? ARRAYS_QUANTITY : ARRAY_LENGTH;
+        direction === Direction.Column ? arraysQuantity : arrayLength;
       for (let i = position; i < lineEnd; i++) {
         const newMatch = addressElements.find(
           (e: AddressElement) =>

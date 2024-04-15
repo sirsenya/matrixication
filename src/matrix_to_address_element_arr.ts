@@ -1,5 +1,3 @@
-import { ARRAYS_QUANTITY, ARRAY_LENGTH } from "../main.js";
-
 export type AddressElement = {
   value: number;
   column: number;
@@ -7,9 +5,11 @@ export type AddressElement = {
 };
 
 export const matrixToAddressElementArr = (matrix: number[][]) => {
+  let arrayLength = matrix[0].length;
+  let arraysQuantity = matrix.length;
   const result: AddressElement[] = [];
-  for (let column = 0; column < ARRAYS_QUANTITY; column++) {
-    for (let row = 0; row < ARRAY_LENGTH; row++) {
+  for (let column = 0; column < arraysQuantity; column++) {
+    for (let row = 0; row < arrayLength; row++) {
       result.push({ value: matrix[column][row], row, column });
     }
   }
