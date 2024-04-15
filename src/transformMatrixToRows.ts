@@ -4,7 +4,7 @@ export type AddressElement = {
   row: number;
 };
 
-export const matrixToAddressElementArr = (matrix: number[][]) => {
+export const transformMatrixToRows = (matrix: number[][]) => {
   let arrayLength = matrix[0].length;
   let arraysQuantity = matrix.length;
   const result: AddressElement[] = [];

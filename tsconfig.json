@@ -110,7 +110,7 @@
   "include": [
     // "src",
     "package.json",
-    "main.ts",
+    "src/main.ts",
   ],
   
   "exclude": [

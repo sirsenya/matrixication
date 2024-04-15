@@ -1,7 +1,7 @@
 import {
-  AddressElement,
-  matrixToAddressElementArr,
-} from "./matrix_to_address_element_arr.js";
+  type AddressElement,
+  transformMatrixToRows,
+} from "./transformMatrixToRows.js";
 
 enum Direction {
   Row = "row",
@@ -19,11 +19,10 @@ type CheckSettings = {
 export const modifyMatrix = (initialMatrix: number[][]): number[][] => {
   let arrayLength = initialMatrix[0].length;
   let arraysQuantity = initialMatrix.length;
-  console.log(initialMatrix);
   const modifiedMatrix: number[][] = [...initialMatrix];
 
   const addressElements: AddressElement[] =
-    matrixToAddressElementArr(initialMatrix);
+    transformMatrixToRows(initialMatrix);
 
   const stringifyAddressElement = (ad: AddressElement): string =>
     `${ad.value}:${ad.row}:${ad.column}`;
@@ -84,7 +83,6 @@ export const modifyMatrix = (initialMatrix: number[][]): number[][] => {
 
   for (let i = 0; i < addressElements.length; i++) {
     const addressElement = addressElements[i];
-    //TODO: skip lowest four squares from the right
     if (addressElement.value != 0) {
       checkAddressElement(addressElement);
     }
@@ -110,6 +108,5 @@ export const modifyMatrix = (initialMatrix: number[][]): number[][] => {
     }
   };
   reconstructMatrix();
-  console.log(modifiedMatrix);
   return modifiedMatrix;
 };

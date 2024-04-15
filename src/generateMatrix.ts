@@ -21,7 +21,5 @@ export const generateMatrix = (params: {
   for (let i = 0; i < arraysQuantity; i++) {
     matrix.push(generateArray());
   }
-  console.log("matrix");
-  console.log(matrix);
   return matrix;
 };
