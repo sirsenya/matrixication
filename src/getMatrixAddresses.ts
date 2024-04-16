@@ -1,8 +1,5 @@
-import {
-  AddressElement,
-  transformMatrixToRows,
-} from "./transformMatrixToRows.js";
-import { transformRowsToMatrix } from "./transformRowsToMatrix.js";
+import { AddressElement, transformMatrixToRows } from "./transformMatrixToRows";
+import { transformRowsToMatrix } from "./transformRowsToMatrix";
 
 export const getMatrixAddresses = (modifiedMatrix: number[][]): number[][] => {
   const matrixCopy: number[][] = [...modifiedMatrix];

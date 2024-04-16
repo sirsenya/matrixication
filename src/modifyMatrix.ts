@@ -1,7 +1,7 @@
 import {
   type AddressElement,
   transformMatrixToRows,
-} from "./transformMatrixToRows.js";
+} from "./transformMatrixToRows";
 
 enum Direction {
   Row = "row",

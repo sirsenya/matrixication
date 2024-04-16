@@ -1,7 +1,7 @@
-import { generateMatrix } from "./generateMatrix.js";
-import { modifyMatrix } from "./modifyMatrix.js";
-import { saveAsFile } from "./saveAsFile.js";
-import { getMatrixAddresses } from "./getMatrixAddresses.js";
+import { generateMatrix } from "./generateMatrix";
+import { modifyMatrix } from "./modifyMatrix";
+import { saveAsFile } from "./saveAsFile";
+import { getMatrixAddresses } from "./getMatrixAddresses";
 import express from "express";
 import { config } from "dotenv";
 

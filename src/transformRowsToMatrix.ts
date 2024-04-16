@@ -1,4 +1,4 @@
-import { AddressElement } from "./transformMatrixToRows.js";
+import { AddressElement } from "./transformMatrixToRows";
 
 export const transformRowsToMatrix = (addressElements: AddressElement[]) => {
   let result: number[][] = [];

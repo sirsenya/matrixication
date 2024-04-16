@@ -1,7 +1,7 @@
 import { writeFile, access, appendFile } from "fs/promises";
 import { config } from "dotenv";
 import { randomUUID } from "crypto";
-import { dirname, join } from "path";
+import { join } from "path";
 import { mkdir } from "fs/promises";
 config();
 
