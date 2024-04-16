@@ -10,6 +10,8 @@
 
 5. when server is running (Listening on port 4000) send a following GET request: "http://localhost:4000/?M=7&N=6". M is quantity of arrays, N is length of each array - you can change their value;
 
-6. to stop the app "ctrl/cmd + c"
+6. JSON is saved into db folder after each get request
 
-7. to test the app "npm run test"
+7. to stop the app "ctrl/cmd + c"
+
+8. to test the app "npm run test"
