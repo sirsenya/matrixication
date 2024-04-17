@@ -4,6 +4,7 @@ import { saveAsFile } from "./saveAsFile";
 import { getMatrixAddresses } from "./getMatrixAddresses";
 import express from "express";
 import { config } from "dotenv";
+import { generateMatrixInput } from "./shapes";
 
 config();
 const app = express();
@@ -15,45 +16,28 @@ type ResObj = {
 };
 
 app.get("/", async (req, res) => {
-  let arrayLength: number;
-  let arraysQuantity: number;
+  const reqQueryN = req.query.N;
+  const reqQueryM = req.query.M;
+
+  const input = { arrayLength: +reqQueryN!, arraysQuantity: +reqQueryM! };
   try {
-    const reqQueryN = req.query.N;
-    const reqQueryM = req.query.M;
-
-    if (
-      typeof reqQueryM == "undefined" ||
-      typeof reqQueryN == "undefined" ||
-      isNaN(+reqQueryM!) ||
-      isNaN(+reqQueryN!)
-    )
-      throw Error();
-
-    arrayLength = +reqQueryN!;
-    arraysQuantity = +reqQueryM!;
-
-    if (arrayLength < 0 || arraysQuantity < 0) {
-      throw new Error();
-    }
-    const initalMatrix: number[][] = generateMatrix({
-      arrayLength,
-      arraysQuantity,
-    });
-
-    const matrixAddresses: number[][] = getMatrixAddresses(
-      modifyMatrix(initalMatrix)
-    );
-
-    const responseObj: ResObj = {
-      input: initalMatrix,
-      output: matrixAddresses,
-    };
-    const responseJson: string = JSON.stringify(responseObj, null, 2);
-    await saveAsFile(responseJson);
-    res.send(responseJson);
+    generateMatrixInput.parse(input);
   } catch (e) {
     return res.status(400).json("The input is invalid");
   }
+  const initalMatrix: number[][] = generateMatrix(input);
+
+  const matrixAddresses: number[][] = getMatrixAddresses(
+    modifyMatrix(initalMatrix)
+  );
+
+  const responseObj: ResObj = {
+    input: initalMatrix,
+    output: matrixAddresses,
+  };
+  const responseJson: string = JSON.stringify(responseObj, null, 2);
+  res.send(responseJson);
+  saveAsFile(responseJson);
 });
 
 app.listen(port, () => {
